@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-sanitization-config-bucket
+  labels:
+    {{- include "data-sanitization.labels" . | nindent 4 }}
+spec:
+  template:
+    spec:
+      containers:
+      - name: minio-client
+        image: quay.io/minio/minio:RELEASE.2024-03-15T01-07-19Z
+        envFrom:
+        - secretRef:
+            name: {{ include "data-sanitization.secretName" . }}
+        command:
+        - /bin/sh
+        - -c
+        - |
+          set -x;  # enable printing the command before execution (in the sub-shell)
+          mc alias set minio {{ .Values.s3.endpoint }} $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY;
+          mc mb minio/sanitization/config
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
+        {{- with .Values.volumeMounts }}
+        volumeMounts:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      restartPolicy: Never
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  backoffLimit: 1
