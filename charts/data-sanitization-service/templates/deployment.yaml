@@ -34,7 +34,7 @@ spec:
           env:
             - name: ENDPOINT
               value: {{ .Values.s3.endpoint }}
-            {{- with .Values.s3.certificate }}
+            {{- if .Values.s3.certificate }}
             - name: SSL_CERT_FILE
               value: {{ .Values.s3.certificate }}
             {{- end }}
