@@ -109,7 +109,7 @@ def get_job_status_by_id(jobId: str) -> JobStatus:
         )
         LOGGER.info("Got Spark application data-sanitization-job-%s status", jobId)
 
-        jobStatus = api_response['status']['applicationState']
+        jobStatus = api_response.get('status', {}).get('applicationState', {'state': 'UNKNOWN'})
     except ApiException as error:
         LOGGER.error("Exception when getting Spark application "
                      "data-sanitization-job-%s: %s", jobId, error)
