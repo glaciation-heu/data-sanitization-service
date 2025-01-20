@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "data-sanitization.fullname" . }}
+  namespace: {{ include "data-sanitization.namespace" . }}
   labels:
     {{- include "data-sanitization.labels" . | nindent 4 }}
 spec:

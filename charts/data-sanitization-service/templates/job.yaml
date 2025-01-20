@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: create-sanitization-config-bucket
+  namespace: {{ include "data-sanitization.namespace" . }}
   labels:
     {{- include "data-sanitization.labels" . | nindent 4 }}
 spec:

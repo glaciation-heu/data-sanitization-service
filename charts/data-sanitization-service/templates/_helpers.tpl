@@ -71,3 +71,10 @@ Create the name of the secret to use
 {{- default "default" .Values.secret.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Allow the release namespace to be overridden
+*/}}
+{{- define "data-sanitization.namespace" -}}
+{{- default .Release.Namespace .Values.namespace -}}
+{{- end -}}

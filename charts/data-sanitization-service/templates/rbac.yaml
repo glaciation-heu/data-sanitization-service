@@ -3,6 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: data-sanitization-role
+  namespace: {{ include "data-sanitization.namespace" . }}
   labels:
     {{- include "data-sanitization.labels" . | nindent 4 }}
   {{- with .Values.rbac.annotations }}
@@ -21,6 +22,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: data-sanitization-role-binding
+  namespace: {{ include "data-sanitization.namespace" . }}
   labels:
     {{- include "data-sanitization.labels" . | nindent 4 }}
   {{- with .Values.rbac.annotations }}

@@ -1,3 +1,5 @@
+# namespace: spark-app
+
 replicaCount: 1
 
 image:

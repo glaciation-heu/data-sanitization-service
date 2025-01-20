@@ -16,6 +16,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
+  namespace: {{ include "data-sanitization.namespace" . }}
   labels:
     {{- include "data-sanitization.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
