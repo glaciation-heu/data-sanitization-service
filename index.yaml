@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   data-sanitization:
   - apiVersion: v2
+    appVersion: 0.2.2
+    created: "2025-02-17T22:02:00.581645579Z"
+    description: A Helm chart for Data Sanitization in Kubernetes
+    digest: e36b0d85b2dc3b34e102dbfa78fea969b7471f9cff0a5f5c9dbe55a92a57c6d0
+    name: data-sanitization
+    urls:
+    - https://github.com/glaciation-heu/data-sanitization-service/releases/download/data-sanitization-0.2.6/data-sanitization-0.2.6.tgz
+    version: 0.2.6
+  - apiVersion: v2
     appVersion: 0.2.1
     created: "2025-01-20T17:30:15.754146117Z"
     description: A Helm chart for Data Sanitization in Kubernetes
@@ -64,4 +73,4 @@ entries:
     urls:
     - https://github.com/glaciation-heu/data-sanitization-service/releases/download/data-sanitization-0.1.0/data-sanitization-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-20T17:30:15.754179078Z"
+generated: "2025-02-17T22:02:00.581677808Z"
