@@ -2,14 +2,14 @@
   "apiVersion": "sparkoperator.k8s.io/v1beta2",
   "kind": "SparkApplication",
   "metadata": {
-    "name": "data-sanitization-job-{{ req_id }}",
+    "name": "dsj-{{ req_id }}",
     "namespace": "spark-app"
   },
   "spec": {
     "type": "Python",
     "pythonVersion": "3",
     "mode": "cluster",
-    "image": "mattlectic/mondrian:1.0.1",
+    "image": "mattlectic/mondrian:1.0.2",
     "imagePullPolicy": "IfNotPresent",
     "mainApplicationFile": "local:///mondrian/anonymize.py",
     "deps": {
@@ -102,6 +102,14 @@
       "spark.hadoop.fs.s3a.connection.timeout": "10000",
       "spark.hadoop.fs.s3a.bucket.all.committer.magic.enabled": "true",
       "spark.hadoop.fs.s3a.directory.marker.retention": "keep"
+    },
+    "monitoring": {
+      "exposeDriverMetrics": true,
+      "exposeExecutorMetrics": true,
+      "prometheus": {
+        "jmxExporterJar": "/opt/spark/jars/jmx_prometheus_javaagent-1.0.1.jar",
+        "port": 8090
+      }
     }
   }
 }

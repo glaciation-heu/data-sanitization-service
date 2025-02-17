@@ -87,12 +87,12 @@ def delete_job(jobId: str) -> None:
             "v1beta2",
             "spark-app",
             "sparkapplications",
-            f"data-sanitization-job-{jobId}",
+            f"dsj-{jobId}",
             grace_period_seconds=None,
         )
-        LOGGER.info("Deleted Spark application data-sanitization-job-%s", jobId)
+        LOGGER.info("Deleted Spark application dsj-%s", jobId)
     except ApiException:
-        LOGGER.warning("Spark application data-sanitization-job-%s does not exist", jobId)
+        LOGGER.warning("Spark application dsj-%s does not exist", jobId)
 
 
 def get_job_status_by_id(jobId: str) -> JobStatus:
@@ -105,14 +105,14 @@ def get_job_status_by_id(jobId: str) -> JobStatus:
             "v1beta2",
             "spark-app",
             "sparkapplications",
-            f"data-sanitization-job-{jobId}",
+            f"dsj-{jobId}",
         )
-        LOGGER.info("Got Spark application data-sanitization-job-%s status", jobId)
+        LOGGER.info("Got Spark application dsj-%s status", jobId)
 
         jobStatus = api_response.get('status', {}).get('applicationState', {'state': 'UNKNOWN'})
     except ApiException as error:
         LOGGER.error("Exception when getting Spark application "
-                     "data-sanitization-job-%s: %s", jobId, error)
+                     "dsj-%s: %s", jobId, error)
         if error.status == 404:
             raise HTTPException(status_code=404, detail="Job not found")
         raise HTTPException(status_code=500, detail="Error getting job status")
@@ -180,10 +180,10 @@ def submit_job(job: Job) -> SubmitJob200Response:
             body,
             field_manager="data_sanitization_service"
         )
-        LOGGER.info("Created Spark application data-sanitization-job-%s", req_id)
+        LOGGER.info("Created Spark application dsj-%s", req_id)
     except ApiException as error:
         LOGGER.error("Exception when creating Spark application "
-                     "data-sanitization-job-%s: %s", req_id, error)
+                     "dsj-%s: %s", req_id, error)
         raise HTTPException(
             status_code=500,
             detail="Error deploying job configuration"
